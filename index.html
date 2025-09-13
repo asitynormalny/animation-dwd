@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DWD Animácia</title>
+  <style>
+    body {
+      margin: 0;
+      background: white;
+      overflow: hidden; /* zabránime scrollovaniu */
+      height: 100vh;
+      width: 100vw;
+    }
+    img {
+      position: absolute;
+      width: 15cm; /* šírka podľa tvojej požiadavky */
+      height: 4cm; /* výška podľa tvojej požiadavky */
+    }
+  </style>
+</head>
+<body>
+  <!-- Tu si vložíš svoj obrázok -->
+  <img src="kokot.png" id="logo" alt="Logo">
+
+  <script>
+    const logo = document.getElementById("logo");
+
+    // Nastavíme počiatočné hodnoty
+    let x = 50, y = 50;
+    let dx = 2, dy = 2; // rýchlosť pohybu
+
+    function animate() {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const logoWidth = logo.offsetWidth;
+      const logoHeight = logo.offsetHeight;
+
+      x += dx;
+      y += dy;
+
+      // Odrážanie od okrajov
+      if (x + logoWidth >= screenWidth || x <= 0) {
+        dx = -dx;
+      }
+      if (y + logoHeight >= screenHeight || y <= 0) {
+        dy = -dy;
+      }
+
+      logo.style.left = x + "px";
+      logo.style.top = y + "px";
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Upravíme pri zmene veľkosti okna (responzivita)
+    window.addEventListener("resize", () => {
+      if (x + logo.offsetWidth > window.innerWidth) x = window.innerWidth - logo.offsetWidth;
+      if (y + logo.offsetHeight > window.innerHeight) y = window.innerHeight - logo.offsetHeight;
+    });
+  </script>
+</body>
+</html>
